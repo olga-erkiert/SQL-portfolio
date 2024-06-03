@@ -1,4 +1,7 @@
 -- What is every client's most recent purchase date?
+-- Source: database with one table containing following columns: 
+	--Customer_ID, Purchase_Date, Product_Category, Product_Price, Quantity, Total_Purchase_Amount,
+	--Payment_Method, Customer_Age, Returns, Customer_Name, Age, Gender, Churn
 
 WITH customer_rank AS (
 	SELECT 
