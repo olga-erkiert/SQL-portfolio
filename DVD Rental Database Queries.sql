@@ -36,8 +36,6 @@ WITH customers_rentals AS (
 	ON f.film_id = i.film_id
 	LEFT JOIN rental AS r
 	ON i.inventory_id = r.inventory_id
-	LEFT JOIN payment AS p
-	ON r.rental_id = p.rental_id
 	LEFT JOIN customer c
 	ON r.customer_id = c.customer_id
 )
