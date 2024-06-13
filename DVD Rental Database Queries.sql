@@ -8,20 +8,20 @@ when customer rented between 20-29 films he gets 20% discount
 when customer rented between 15-19 films he gets 10% discount
 */
 
-SELECT customer.customer_id, first_name, last_name, email, COUNT(inventory_id) AS total_rental, 
+SELECT c.customer_id, c.first_name, c.last_name, c.email, COUNT(r.rental_id) AS total_rental, 
 	CASE
-		WHEN (COUNT(inventory_id) >= 30) THEN '30% discount! You have received maximum discount! Congratulations!'
-		WHEN (COUNT(inventory_id) = 29) THEN CONCAT('20% discount! You need ', 30-COUNT(inventory_id), ' more rental to get 30% discount in the next promotion!')
-		WHEN (COUNT(inventory_id) BETWEEN 20 AND 28) THEN CONCAT('20% discount! You need ', 30-COUNT(inventory_id), ' more rentals to get 30% discount in the next promotion!')
-		WHEN (COUNT(inventory_id) = 19) THEN CONCAT('10% discount! You need ', 20-COUNT(inventory_id), ' more rental to get 20% discount in the next promotion!')
-		WHEN (COUNT(inventory_id) BETWEEN 15 AND 18) THEN CONCAT('10% discount! You need ', 20-COUNT(inventory_id), ' more rentals to get 20% discount in the next promotion!')
+		WHEN (COUNT(r.rental_id) >= 30) THEN '30% discount! You have received maximum discount! Congratulations!'
+		WHEN (COUNT(r.rental_id) = 29) THEN CONCAT('20% discount! You need ', 30-COUNT(r.rental_id), ' more rental to get 30% discount in the next promotion!')
+		WHEN (COUNT(r.rental_id) BETWEEN 20 AND 28) THEN CONCAT('20% discount! You need ', 30-COUNT(r.rental_id), ' more rentals to get 30% discount in the next promotion!')
+		WHEN (COUNT(r.rental_id) = 19) THEN CONCAT('10% discount! You need ', 20-COUNT(r.rental_id), ' more rental to get 20% discount in the next promotion!')
+		WHEN (COUNT(r.rental_id) BETWEEN 15 AND 18) THEN CONCAT('10% discount! You need ', 20-COUNT(r.rental_id), ' more rentals to get 20% discount in the next promotion!')
 		ELSE 'Sorry this time you haven''t receive any discount. You need to have more then 15 rentals. Keep going!'
 	END AS newsletter_message
-FROM customer
-LEFT OUTER JOIN rental
-ON customer.customer_id = rental.customer_id
-GROUP BY customer.customer_id
-ORDER BY COUNT(inventory_id) DESC;
+FROM customer c
+LEFT OUTER JOIN rental r
+ON c.customer_id = r.customer_id
+GROUP BY c.customer_id
+ORDER BY total_rental DESC;
 
 
 /* QUERY 2
