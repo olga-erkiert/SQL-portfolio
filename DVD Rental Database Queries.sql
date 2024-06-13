@@ -63,3 +63,19 @@ WHERE
 	AND c.name IN ('Action', 'Sci-Fi') 
 	AND l.name = 'German'
 ORDER BY length;
+
+
+/* QUERY 4
+Display the movies offered for rent in store_id 1 and not offered in store_id 2.
+*/
+
+SELECT DISTINCT film_id, title
+FROM film
+WHERE film_id IN
+	(SELECT film_id 
+	FROM inventory 
+	WHERE store_id =1) AND film_id NOT IN
+		(SELECT film_id 
+		FROM inventory 
+		WHERE store_id =2)
+ORDER BY film_id;
